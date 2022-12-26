@@ -1,7 +1,54 @@
-export default function Home() {
+import './login.css';
+import { Logo } from '../../components/Logo';
+import InputContainer from '../../components/InputContainer';
+import Button from '../../components/Button';
+import { useState } from 'react';
+import { auth } from '../../services/firebaseConnection';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+export default function Login() {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState();
+	const navigate = useNavigate();
+	async function handleLogin(e) {
+		e.preventDefault();
+		if (email === '' || password === '') {
+			alert('Preencha todos os campos!');
+			return;
+		}
+		signInWithEmailAndPassword(auth, email, password)
+			.then(() => {
+				navigate('/admin', { replace: true });
+			})
+			.catch(() => {
+				toast.error('E-mail ou senha inválidos');
+			});
+	}
+
 	return (
-		<div>
-			<h1>Login</h1>
+		<div className="login-container">
+			<Logo />
+			<form action="" className="form" onSubmit={handleLogin}>
+				<InputContainer
+					type="email"
+					labelText="E-mail:"
+					placeholder="Digite seu e-mail"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					required
+				/>
+				<InputContainer
+					type="password"
+					labelText="Senha:"
+					placeholder="Digite sua senha"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
+				/>
+				<Button type="submit">Acessar</Button>
+			</form>
 		</div>
 	);
 }
