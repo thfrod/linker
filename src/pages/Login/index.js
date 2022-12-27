@@ -1,5 +1,5 @@
 import './login.css';
-import { Logo } from '../../components/Logo';
+import Logo from '../../components/Logo';
 import InputContainer from '../../components/InputContainer';
 import Button from '../../components/Button';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ export default function Login() {
 	async function handleLogin(e) {
 		e.preventDefault();
 		if (email === '' || password === '') {
-			alert('Preencha todos os campos!');
+			toast.error('E-mail ou senha inválidos');
 			return;
 		}
 		signInWithEmailAndPassword(auth, email, password)
@@ -33,7 +33,7 @@ export default function Login() {
 			<form action="" className="form" onSubmit={handleLogin}>
 				<InputContainer
 					type="email"
-					labelText="E-mail:"
+					labeltext="E-mail:"
 					placeholder="Digite seu e-mail"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +41,7 @@ export default function Login() {
 				/>
 				<InputContainer
 					type="password"
-					labelText="Senha:"
+					labeltext="Senha:"
 					placeholder="Digite sua senha"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}

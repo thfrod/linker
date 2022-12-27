@@ -2,7 +2,7 @@
 import './button.css';
 export default function Button(props) {
 	return (
-		<button className="button" type={props.type}>
+		<button className="button" {...props}>
 			{props.children}
 		</button>
 	);

@@ -3,7 +3,11 @@
 	border: none;
 	border-radius: 2px;
 	background: #57e089;
-	color: #202528;
+	color: #fff;
 	font-weight: 600;
 	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
 }

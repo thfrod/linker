@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './error.css';
-import { Logo } from '../../components/Logo';
+import Logo from '../../components/Logo';
 
 export default function Error() {
 	return (
