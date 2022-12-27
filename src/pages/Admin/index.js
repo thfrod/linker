@@ -47,7 +47,7 @@ export default function Admin() {
 
 	async function handleRegister(e) {
 		e.preventDefault();
-		if (nameInput == '' || urlInput == '') {
+		if (nameInput === '' || urlInput === '') {
 			toast.warn('Dados inválidos');
 			return;
 		}
