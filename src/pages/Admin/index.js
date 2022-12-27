@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './admin.css';
 import Header from '../../components/Header';
 import Logo from '../../components/Logo';
@@ -25,6 +25,25 @@ export default function Admin() {
 	const [urlInput, setUrlInput] = useState('');
 	const [backgroundColorInput, setBackgroundColorInput] = useState('#f1f1f1');
 	const [textColorInput, setTextColorInput] = useState('#121212');
+	const [links, setLinks] = useState([]);
+
+	useEffect(() => {
+		const linksRef = collection(db, 'links');
+		const queryRef = query(linksRef, orderBy('createdAt', 'asc'));
+		const unsub = onSnapshot(queryRef, (snapshot) => {
+			let list = [];
+			snapshot.forEach((doc) => {
+				list.push({
+					id: doc.id,
+					name: doc.data().name,
+					url: doc.data().url,
+					bg: doc.data().bg,
+					color: doc.data().color,
+				});
+			});
+			setLinks(list);
+		});
+	}, []);
 
 	async function handleRegister(e) {
 		e.preventDefault();
@@ -54,7 +73,17 @@ export default function Admin() {
 				console.log(e);
 			});
 	}
-
+	async function handleDeleteLink(id) {
+		const docRef = doc(db, 'links', id);
+		await deleteDoc(docRef)
+			.then(() => {
+				toast.success('Link deletado com sucesso');
+			})
+			.catch((e) => {
+				toast.error('Erro ao deletar link');
+				console.log(e);
+			});
+	}
 	return (
 		<div className="admin-container">
 			<Header />
@@ -134,17 +163,23 @@ export default function Admin() {
 
 			<h2 className="title">Meus Links</h2>
 
-			<article
-				className="list animate-pop"
-				style={{ backgroundColor: '#000', color: '#FFF' }}
-			>
-				<p>Meu link</p>
-				<div>
-					<button className="button-delete">
-						<FiTrash2 size={18} color="#fff" />
-					</button>
-				</div>
-			</article>
+			{links.map((link, index) => (
+				<article
+					key={index}
+					className="list animate-pop"
+					style={{ backgroundColor: link.bg, color: link.color }}
+				>
+					<p>{link.name}</p>
+					<div>
+						<button
+							className="button-delete"
+							onClick={() => handleDeleteLink(link.id)}
+						>
+							<FiTrash2 size={18} color="#fff" />
+						</button>
+					</div>
+				</article>
+			))}
 		</div>
 	);
 }
