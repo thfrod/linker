@@ -30,3 +30,8 @@ a {
 	justify-content: center;
 	background-color: #00000080;
 }
+
+.title {
+	color: #fff;
+	margin: 28px 0 14px 0;
+}

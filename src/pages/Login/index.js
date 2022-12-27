@@ -5,8 +5,9 @@ import Button from '../../components/Button';
 import { useState } from 'react';
 import { auth } from '../../services/firebaseConnection';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { AiOutlineHome } from 'react-icons/ai';
 
 export default function Login() {
 	const [email, setEmail] = useState('');
@@ -49,6 +50,19 @@ export default function Login() {
 				/>
 				<Button type="submit">Acessar</Button>
 			</form>
+			<Link
+				to="/"
+				style={{
+					marginTop: 14,
+					color: '#FFF',
+					display: 'flex',
+					alignItems: 'center',
+					gap: '.5rem',
+				}}
+			>
+				<AiOutlineHome size={18} color="#FFF" />
+				Voltar á pagina home
+			</Link>
 		</div>
 	);
 }
